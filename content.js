@@ -111,12 +111,12 @@ function updateIsEnabled(settings) {
         return;
     }
     const currentUrl = window.location.href;
-    if (currentUrl.endsWith('/quiz')) {
+    if (currentUrl.includes('/recent-mistakes') || currentUrl.includes('/extra_study')) {
+        isEnabled = settings.enabledExtraStudy;
+    } else if (currentUrl.endsWith('/quiz')) {
         isEnabled = settings.enabledQuiz;
     } else if (currentUrl.endsWith('/review')) {
         isEnabled = settings.enabledReview;
-    } else if (currentUrl.includes('/extra_study')) {
-        isEnabled = settings.enabledExtraStudy;
     } else {
         isEnabled = false;
     }
