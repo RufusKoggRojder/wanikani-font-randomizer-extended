@@ -111,12 +111,14 @@ function updateIsEnabled(settings) {
         return;
     }
     const currentUrl = window.location.href;
-    if (currentUrl.includes('/recent-mistakes') || currentUrl.includes('/extra_study')) {
-        isEnabled = settings.enabledExtraStudy;
+    if(currentUrl.includes('/recent-mistakes')) {
+        isEnabled = settings.enabledRecentMistakes;
     } else if (currentUrl.endsWith('/quiz')) {
         isEnabled = settings.enabledQuiz;
     } else if (currentUrl.endsWith('/review')) {
         isEnabled = settings.enabledReview;
+    } else if (currentUrl.includes('/extra_study')) {
+        isEnabled = settings.enabledExtraStudy;
     } else {
         isEnabled = false;
     }
@@ -124,12 +126,13 @@ function updateIsEnabled(settings) {
 
 function loadSettings() {
     return new Promise((resolve) => {
-        browser.storage.local.get(['enabledGlobal', 'enabledQuiz', 'enabledReview', 'enabledExtraStudy'], function(result) {
+        browser.storage.local.get(['enabledGlobal', 'enabledQuiz', 'enabledReview', 'enabledExtraStudy', 'enabledRecentMistakes'], function(result) {
             const defaultSettings = {
                 enabledGlobal: true,
                 enabledQuiz: true,
                 enabledReview: true,
-                enabledExtraStudy: true
+                enabledExtraStudy: true,
+                enabledRecentMistakes: true 
             };
             const mergedSettings = {...defaultSettings, ...result};
             updateIsEnabled(mergedSettings);

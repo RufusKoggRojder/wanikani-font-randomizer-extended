@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 enabledGlobal: checkboxes.global.checked,
                 enabledQuiz: checkboxes.quiz.checked,
                 enabledReview: checkboxes.review.checked,
-                enabledExtraStudy: checkboxes.extraStudy.checked
+                enabledExtraStudy: checkboxes.extraStudy.checked,
+                enabledRecentMistakes: checkboxes.recentMistakes.checked
             });
         });
     }
@@ -22,16 +23,18 @@ document.addEventListener('DOMContentLoaded', function() {
         global: document.getElementById('enabledGlobal'),
         quiz: document.getElementById('enabledQuiz'),
         review: document.getElementById('enabledReview'),
-        extraStudy: document.getElementById('enabledExtraStudy')
+        extraStudy: document.getElementById('enabledExtraStudy'),
+        recentMistakes: document.getElementById('enabledRecentMistakes')
     };
     const subOptions = document.querySelector('.sub-options');
 
     // Load saved settings
-    browser.storage.local.get(['enabledGlobal', 'enabledQuiz', 'enabledReview', 'enabledExtraStudy'], function(result) {
+    browser.storage.local.get(['enabledGlobal', 'enabledQuiz', 'enabledReview', 'enabledExtraStudy', 'enabledRecentMistakes'], function(result) {
         checkboxes.global.checked = result.enabledGlobal !== false;
         checkboxes.quiz.checked = result.enabledQuiz !== false;
         checkboxes.review.checked = result.enabledReview !== false;
         checkboxes.extraStudy.checked = result.enabledExtraStudy !== false;
+        checkboxes.recentMistakes.checked = result.enabledRecentMistakes !== false;
         updateSubOptionsState();
     });
 
