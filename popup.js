@@ -54,4 +54,9 @@ document.addEventListener('DOMContentLoaded', function() {
             browser.tabs.sendMessage(tabs[0].id, {action: "shuffleFont"});
         });
     });
+
+    const openSettingsButton = document.getElementById('openSettings');
+    openSettingsButton.addEventListener('click', function() {
+        browser.runtime.openOptionsPage();
+    });
 });
