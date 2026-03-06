@@ -1,5 +1,5 @@
 // List of fonts to randomly choose from
-const fonts = [
+const defaultFonts = [
     // Existing fonts
     'Noto Sans JP',
     'Meiryo',
@@ -63,18 +63,43 @@ function loadGoogleFont(font) {
     });
 }
 
-function getFont() {
+async function getStoredFonts() {
+    const result = await browser.storage.local.get('customFonts');
+    return result.customFonts || defaultFonts;
+}
+
+async function getFont() {
+    const fonts = await getStoredFonts();
+
     if (!selectedFont) {
         selectedFont = fonts[Math.floor(Math.random() * fonts.length)];
     }
 
-    return loadGoogleFont(selectedFont)
-        .then(() => selectedFont)
-        .catch(() => {
-            console.error(`Failed to load font: ${selectedFont}`);
-            selectedFont = null;
-            return selectedFont; // Fallback to default font
-        });
+    try {
+        await loadGoogleFont(selectedFont);
+        return selectedFont;
+    } catch {
+        console.error(`Failed to load font: ${selectedFont}`);
+        selectedFont = null;
+        return selectedFont;
+    }
+}
+
+export async function getAllFonts() {
+    const fonts = await getStoredFonts();
+
+    const loadedFonts = await Promise.all(
+        fonts.map(async (font) => {
+            try {
+                await loadGoogleFont(font);
+                return font;
+            } catch {
+                return null;
+            }
+        })
+    );
+
+    return loadedFonts.filter((font) => font !== null);
 }
 
 // Modify the changeJapaneseFonts function
