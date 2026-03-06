@@ -20,6 +20,7 @@
       "run_at": "document_idle"
     }
   ],
+  "options_page": "settings/options.html",
   "action": {
     "default_icon": "icons/icon48.png",
     "default_popup": "popup.html"
