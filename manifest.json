@@ -11,8 +11,12 @@
   ],
   "content_scripts": [
     {
-      "matches": ["https://www.wanikani.com/*"],
-      "js": ["content.js"],
+      "matches": [
+        "https://www.wanikani.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_idle"
     }
   ],
@@ -25,7 +29,12 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "wanikani-font-randomizer@moz-addon.com"
+      "id": "wanikani-font-randomizer@moz-addon.com",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
     },
     "gecko_android": {}
   }
